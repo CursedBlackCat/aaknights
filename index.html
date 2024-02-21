@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aaknights Death Calculator</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<script type="text/javascript" src="aak-calc.js"></script>
+
+<script>
+    function calculate() {
+        let shining = document.getElementById("shining").value
+        let nian = document.getElementById("nian").value;
+        let hp = document.getElementById("hp").value;
+        let def = document.getElementById("def").value;
+        let defBonus = 0;
+        let defMultiplier = 1.0;
+
+        // Calculate Shining's talent def bonus
+        if (!(shining === "none")) {
+            defBonus += 60;
+            if (document.getElementById("shiningP5").checked) {
+                defBonus += 5;
+            }
+        }
+        // Calculate defense multiplier from Shining
+        switch (shining) {
+            case "s3sl7":
+                defMultiplier += 0.6;
+                break;
+            case "s3m1":
+                defMultiplier += 0.7;
+                break;
+            case "s3m2":
+                defMultiplier += 0.8;
+                break;
+            case "s3m3":
+                defMultiplier += 1.0;
+                break;
+        }
+
+        // Calculate defense multiplier from Nian
+        switch (nian) {
+            case "s3sl7":
+                defMultiplier += 0.5;
+                break;
+            case "s3m1":
+                defMultiplier += 0.6;
+                break;
+            case "s3m2":
+                defMultiplier += 0.7;
+                break;
+            case "s3m3":
+                defMultiplier += 0.8;
+                break;
+        }
+
+        def = Number(def) + defBonus;
+        def = Number(def) * defMultiplier;
+
+        let remainingHP = aakCalc(hp, def);
+        let resultElement = document.getElementById("result");
+
+        if (remainingHP <= 0) {
+            resultElement.classList.remove("green");
+            resultElement.classList.add("red");
+            resultElement.innerHTML = "Your operator dies to Aak's S2/S3."
+        } else {
+            resultElement.classList.remove("red");
+            resultElement.classList.add("green");
+            resultElement.innerHTML = "Your operator lives with " + remainingHP + " HP.";
+        }
+    }
+</script>
+
+<div class="container-title">
+    <h1 class="oxygen-bold">Aaknights S2/S3 Death Calculator</h1>
+</div>
+
+<div class="container">
+    <form>
+        <p>
+            <label for="hp" class="oxygen-bold">Operator base HP:</label>
+            <input type="number" id="hp" name="hp">
+        </p>
+
+        <p>
+            <label for="def" class="oxygen-bold">Operator base Defense:</label>
+            <input type="number" id="def" name="def">
+        </p>
+
+        <p>
+            <label for="shiningP5" class="oxygen-bold">Shining Potency 5+?</label>
+            <input type="checkbox" name="shiningP5" id="shiningP5">
+        </p>
+
+        <p>
+            <label for="shining" class="oxygen-bold">Select Shining skill level:</label>
+            <select name="shining" id="shining">
+                <option value="none">No Shining</option>
+                <option value="s3sl7">S3, SL7</option>
+                <option value="s3m1">S3, M1</option>
+                <option value="s3m2">S3, M2</option>
+                <option value="s3m3">S3, M3</option>
+            </select>
+        </p>
+        <p>
+            <label for="nian" class="oxygen-bold">Select Nian skill level:</label>
+            <select name="nian" id="nian">
+                <option value="none">No Nian</option>
+                <option value="s3sl7">S3, SL7</option>
+                <option value="s3m1">S3, M1</option>
+                <option value="s3m2">S3, M2</option>
+                <option value="s3m3">S3, M3</option>
+            </select>
+        </p>
+        <p>
+            <button type="button" onclick="calculate()" class="oxygen-regular">Calculate!</button>
+        </p>
+    </form>
+    <p id="result" class="oxygen-regular"></p>
+</div>
+</body>
+</html>
