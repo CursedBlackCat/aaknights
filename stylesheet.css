@@ -28,6 +28,12 @@ button {
     display: table-cell;
     margin: 5px;
 }
+
+.content{
+    width: 1000px;
+    margin: auto;
+}
+
 .container-title {
     border: solid #6E6E6E;
     border-radius: 30px;
