@@ -10,7 +10,7 @@ form {
     display: table;
 }
 
-p {
+form p {
     display: table-row;
 }
 
@@ -72,4 +72,8 @@ button {
 
 .green {
     color: forestgreen;
+}
+
+footer p {
+    text-align: center;
 }
