@@ -70,7 +70,7 @@
         if (remainingHP <= 0) {
             resultElement.classList.remove("green");
             resultElement.classList.add("red");
-            resultElement.innerHTML = "Your operator dies to Aak's S2/S3."
+            resultElement.innerHTML = "Your operator dies to Aak's S2/S3 (Overkill by " + Math.abs(remainingHP) + ")."
         } else {
             resultElement.classList.remove("red");
             resultElement.classList.add("green");

@@ -14,9 +14,5 @@ function aakCalc(hp, modifiedDef){
         hp -= damagePerHit;
     }
 
-    if (hp <= 0){
-        hp = 0;
-    }
-
     return Math.round(hp);
 }
