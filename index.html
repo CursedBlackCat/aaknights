@@ -12,13 +12,53 @@
 
 <body>
 <script type="text/javascript" src="aak-calc.js"></script>
+<script type="text/javascript" src="operator-stats.js"></script>
+<script src="everpolate.browserified.min.js"></script>
 
 <script>
+    window.onload = (e) => {
+        const operatorSelector = document.querySelector("#operator-select");
+        operatorSelector.onchange = e => {
+            displayOperatorStats(e.target.value, document.getElementById("elite").value, document.getElementById("level").value);
+        }
+
+        const eliteInput = document.querySelector("#elite");
+        eliteInput.onchange = e => {
+            displayOperatorStats(document.getElementById("operator-select").value, e.target.value, document.getElementById("level").value);
+        }
+
+        const level = document.getElementById("level");
+        level.onchange = e => {
+            displayOperatorStats(document.getElementById("operator-select").value, document.getElementById("elite").value, e.target.value);
+        }
+    }
+
+    function displayOperatorStats(operatorName, elite, level){
+        let stats = calculateOperatorStats(operatorName, elite, level);
+        if (stats){
+            document.getElementById("hp").innerHTML = String(stats.maxHp);
+            document.getElementById("def").innerHTML = String(stats.def);
+        }
+    }
+
     function calculate() {
+        let operator = document.getElementById("operator-select").value;
         let shining = document.getElementById("shining").value
         let nian = document.getElementById("nian").value;
-        let hp = document.getElementById("hp").value;
-        let def = document.getElementById("def").value;
+        let elite = document.getElementById("elite").value;
+        let level = document.getElementById("level").value;
+        let stats = calculateOperatorStats(operator, elite, level);
+
+        if (!stats){
+            let resultElement = document.getElementById("result");
+            resultElement.classList.remove("green");
+            resultElement.classList.remove("red");
+            resultElement.innerHTML = "Unknown operator.";
+            return;
+        }
+
+        let hp = stats.maxHp;
+        let def = stats.def;
         let defBonus = 0;
         let defMultiplier = 1.0;
 
@@ -87,13 +127,34 @@
     <div class="container">
         <form>
             <p>
-                <label for="hp" class="oxygen-bold">Operator base HP:</label>
-                <input type="number" id="hp" name="hp">
+                <label for="operator-select" class="oxygen-bold">Operator:</label>
+                <input id="operator-select" list="operators" name="operator-select">
+                <datalist id="operators">
+
+                </datalist>
+            </p>
+            <p>
+                <label for="elite" class="oxygen-bold">Operator Elite Level:</label>
+                <select name="elite" id="elite">
+                    <option value="0">Elite 0</option>
+                    <option value="1">Elite 1</option>
+                    <option value="2">Elite 2</option>
+                </select>
+            </p>
+            <p>
+                <label for="level" class="oxygen-bold">Operator Level:</label>
+                <input type="number" id="level" name="level" min="1" max="90" placeholder="1"/>
+            </p>
+            <p>
+                <label for="hp" class="oxygen-bold">Operator max HP:</label>
+                <span id="hp" class="oxygen-regular" style="display: table-cell; padding: 5px;"></span>
+                <!-- <input type="number" id="hp" name="hp"> -->
             </p>
 
             <p>
                 <label for="def" class="oxygen-bold">Operator base Defense:</label>
-                <input type="number" id="def" name="def">
+                <span id="def" class="oxygen-regular" style="display: table-cell; padding: 5px;"></span>
+                <!-- <input type="number" id="def" name="def"> -->
             </p>
 
             <p>
