@@ -33,9 +33,9 @@
         }
     }
 
-    function displayOperatorStats(operatorName, elite, level){
+    function displayOperatorStats(operatorName, elite, level) {
         let stats = calculateOperatorStats(operatorName, elite, level);
-        if (stats){
+        if (stats) {
             document.getElementById("hp").innerHTML = String(stats.maxHp);
             document.getElementById("def").innerHTML = String(stats.def);
         }
@@ -49,7 +49,7 @@
         let level = document.getElementById("level").value;
         let stats = calculateOperatorStats(operator, elite, level);
 
-        if (!stats){
+        if (!stats) {
             let resultElement = document.getElementById("result");
             resultElement.classList.remove("green");
             resultElement.classList.remove("red");
@@ -194,6 +194,8 @@
 </div>
 <footer>
     <p class="oxygen-light">Calculator by <a href="https://cursedblackcat.com/">CursedBlackCat</a>.</p>
+    <p class="oxygen-light">Found a bug? Report issues <a
+            href="https://github.com/CursedBlackCat/aaknights/issues">here</a>.</p>
 </footer>
 </body>
 </html>
